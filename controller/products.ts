@@ -64,3 +64,18 @@ export const sortProducts = async (req: any, res: any) => {
     res.json(err);
   }
 };
+
+export const getDetailProduct = async (req: any, res: any) => {
+  try {
+    const getDetailProduct = await pool.query(
+      `select products.*, brand.description
+      from products 
+      left join brand
+      on products.brand = brand.brand 
+      where products.id = ${req.params.id}`
+    );
+    res.json(getDetailProduct.rows);
+  } catch (err) {
+    res.json(err);
+  }
+};
